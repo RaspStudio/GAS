@@ -1,0 +1,15 @@
+build*/
+log/
+
+.vscode/
+
+data/
+
+cache/
+temp/
+__pycache__/
+*.log
+*.dbg
+*.out
+*.pdf
+
