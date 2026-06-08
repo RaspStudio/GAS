@@ -1,0 +1,13 @@
+build*/
+log/
+
+.vscode/
+
+cache/
+temp/
+__pycache__/
+*.log
+*.dbg
+*.out
+
+!figures/**/*.log
