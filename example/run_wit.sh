@@ -32,7 +32,8 @@ MAX_QUERIES=1000
 NUM_PARTS=6
 K=10
 
-HF_MIRROR="https://hf-mirror.com"
+HF_ENDPOINT="https://huggingface.co"
+# HF_ENDPOINT="https://hf-mirror.com" # only if you have issues with the original server
 WIT_DATASET="wikimedia/wit_base"
 WIT_PATTERN="train-%05d-of-00330.parquet"
 
@@ -131,7 +132,7 @@ else
             echo "  [skip] $fname exists"
             continue
         fi
-        url="$HF_MIRROR/datasets/$WIT_DATASET/resolve/main/data/$fname?download=true"
+        url="$HF_ENDPOINT/datasets/$WIT_DATASET/resolve/main/data/$fname?download=true"
         echo "  [dl] $fname ..."
         wget -q --show-progress -O "$dst" "$url"
     done
