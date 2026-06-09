@@ -470,9 +470,6 @@ public:
     }
 
 
-    /**
-     * 将候选节点放入结果堆中，并维护堆的大小和下界；传入的元素尽可能是有效的，
-     */
     template <bool record_tree, typename heap_t>
     requires HeapConcept<heap_t, dist_id_t>
     inline bool fit_in_heap(heap_t& result_heap, dist_t dist,

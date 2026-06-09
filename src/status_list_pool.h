@@ -30,7 +30,7 @@ public:
     }
 
     /**
-     * 获取指定状态的 StatusList，若无空闲则阻塞
+     * Acquire a StatusList in the specified state; block if none available.
      */
     StatusList<dist_t>* acquire(State required_state) {
         std::unique_lock<std::mutex> lock(pool_guard_);
@@ -46,7 +46,7 @@ public:
     }
 
     /**
-     * 将 StatusList 返回到指定状态的池子
+     * Return a StatusList to the pool for the specified state.
      */
     void release(StatusList<dist_t>* status_list, State new_state) {
         {
@@ -58,7 +58,7 @@ public:
     }
 
     /**
-     * 获取指定状态池的当前大小
+     * Get the current size of the pool for the specified state.
      */
     size_t pool_size(State state) const {
         std::unique_lock<std::mutex> lock(pool_guard_);
@@ -67,7 +67,7 @@ public:
     }
 
     /**
-     * 获取所有池的总大小
+     * Get the total size across all pools.
      */
     size_t total_pool_size() const {
         std::unique_lock<std::mutex> lock(pool_guard_);

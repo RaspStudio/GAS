@@ -503,7 +503,6 @@ void ShortcutStorage<dist_t>::consume(StatusList<dist_t>& status_list,
     // sort result before constructing tree
     if (status_list.result_array_.size() < ef) {
         // throw std::runtime_error("Result array size is less than ef, cannot build tree.");
-        // TODO: fix graph
         std::cerr << "Warning: Result array size is less than ef, cannot build tree." << std::endl;
         return;
     }

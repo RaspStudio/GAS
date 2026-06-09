@@ -84,7 +84,7 @@ public:
         for (size_t i = 0; i < size; ++i) {
             nodes_[i].from = INVALID_NODE_ID;
         }
-        result_array_.reserve(200); // Reserve space for results TODO
+        result_array_.reserve(200); // Reserve space for results
     }
 
     ~StatusList() {

@@ -128,7 +128,7 @@ public:
         fprintf(out, "[perf] time_enabled=%llu ns, time_running=%llu ns\n",
         (unsigned long long)rf->time_enabled, (unsigned long long)rf->time_running);
         if (rf->time_running == 0) {
-            fprintf(out, "[perf] WARNING: time_running==0 (事件未被调度)，读数会全为0\n");
+            fprintf(out, "[perf] WARNING: time_running==0 (event was never scheduled), readings will all be 0\n");
         }
     }
 

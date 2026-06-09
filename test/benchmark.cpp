@@ -179,11 +179,11 @@ void search_and_evaluate(
                 std::mutex mtx_search_post_time;
                 std::mutex mtx_search;
 
-                for (size_t i = 0; i < queryset.size(); i += batch_size) {
+                for (size_t i = 0; i < queryset.size(); i += batch_size) { // single thread for search, only parallel post processing and metrics aggregation
                     size_t current_batch_end = std::min(i + batch_size, queryset.size());
                     
-                    size_t batch_b = k;
-                    double disable_frac = 0.3;
+                    size_t batch_b = k; // parameter controls GAS pruning, no effect on non-GAS indices
+                    double disable_frac = 0.3; // disable GAS pruning optimization for early queries
                     double frac = static_cast<double>(i) / queryset.size();
                     if (frac <= disable_frac) {
                         batch_b = static_cast<size_t>(ef - (ef - k) * (static_cast<double>(i) / (queryset.size() * disable_frac)));
@@ -567,7 +567,7 @@ int main(int argc, char **argv) {
         std::cerr << "Usage: " << argv[0]
                   << " dim max_elements max_queries k cache_dir data_path bmeta_path query_path qmeta_path"
                   << " [bmeta2_path qmeta2_path]"
-                  << " [only_run_idx] [repeat] [n_seg] [batch_size] [query_seq_mode] [efs...]\n";
+                  << " [only_run_idx] [repeat] [n_seg] [batch_size (for post-processing)] [query_seq_mode] [efs...]\n";
         return EXIT_FAILURE;
     }
 
@@ -608,7 +608,7 @@ int main(int argc, char **argv) {
     unsigned int only_run_idx = (argc > argi ? std::stoul(argv[argi]) : 0xFFFFFFFF);
     unsigned int repeat       = (argc > argi + 1 ? std::stoul(argv[argi + 1]) : 1);
     unsigned int n_seg        = (argc > argi + 2 ? std::stoul(argv[argi + 2]) : 1);
-    unsigned int batch_size   = (argc > argi + 3 ? std::stoul(argv[argi + 3]) : 1);
+    unsigned int batch_size   = (argc > argi + 3 ? std::stoul(argv[argi + 3]) : 1); // this do not parallelize search
     std::string query_seq_mode = (argc > argi + 4 ? std::string(argv[argi + 4]) : "normal");
     std::vector<size_t> efs;
 
